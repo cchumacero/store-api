@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+fastapi-store-api
 
 # Spyder project settings
 .spyderproject
