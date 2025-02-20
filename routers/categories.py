@@ -3,7 +3,7 @@ from fastapi import Depends
 from config.db import SessionLocal, get_db
 from sqlalchemy.orm import Session
 from schemas import CategorySchema, Response
-from crud import category
+from crud import category, product
 
 router = APIRouter()
 
@@ -35,3 +35,7 @@ async def remove_category(category_id: str, db:Session = Depends(get_db)):
         # return Response(status="bad", code=304, message="the updated gone wrong")
         raise HTTPException(status_code= 404, detail="the deleted gone wrong, not deleted")
 
+@router.get("/{category_id}/products")
+async def get_categories(category_id: str, db: Session = Depends(get_db)):
+    _products = product.get_product_by_category(db, category_id)
+    return _products
