@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Query
 from fastapi import Depends
 from config.db import SessionLocal, get_db
 from sqlalchemy.orm import Session
-from schemas import ProductSchema, Response
+from schemas import ProductSchema, ProductFilterParams
 from crud import product
+from typing import Optional
 
 router = APIRouter()
 
@@ -13,8 +14,24 @@ async def create_product(request: ProductSchema, db: Session = Depends(get_db)):
     return _product
 
 @router.get("/")
-async def get_products(offset: int | None = None, limit: int | None = None, db: Session = Depends(get_db)):
-    _products = product.get_products(db, offset, limit)
+async def get_products(
+    title: Optional[str] = Query(None, description="Filtrar por título"),
+    min_price: Optional[float] = Query(None, description="Filtrar por precio mínimo"),
+    max_price: Optional[float] = Query(None, description="Filtrar por precio máximo"),
+    category: Optional[str] = Query(None, description="Filtrar por categoría"),
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db)
+):
+    filters = ProductFilterParams(
+        title=title,
+        min_price=min_price,
+        max_price=max_price,
+        category=category,
+        skip=skip,
+        limit=limit
+    )
+    _products = product.get_products(db=db, filters=filters)
     return _products
 
 @router.get("/{product_id}")
