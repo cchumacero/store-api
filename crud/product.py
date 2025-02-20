@@ -1,11 +1,25 @@
 from sqlalchemy.orm import Session
 from models import Product
-from schemas import ProductSchema
+from schemas import ProductSchema, ProductFilterParams
 import uuid
 
-def get_products(db:Session, skip:int=0, limit:int=100):
-    return db.query(Product).offset(skip).limit(limit).all()
-
+def get_products(db:Session, filters: ProductFilterParams):
+    query = db.query(Product)
+    
+    if filters.title:
+        query = query.filter(Product.title.ilike(f"%{filters.title}%"))
+        
+    if filters.min_price:
+        query = query.filter(Product.price >= filters.min_price)
+        
+    if filters.max_price:
+        query = query.filter(Product.price <= filters.max_price)
+    
+    if filters.category:
+        query = query.filter(Product.category == filters.category)
+        
+    return query.offset(filters.skip).limit(filters.limit).all()
+    
 def get_product_by_id(db:Session, product_id:str):
     return db.query(Product).filter(Product.id == product_id).first()
 
