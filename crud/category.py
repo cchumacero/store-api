@@ -6,7 +6,7 @@ import uuid
 def get_category(db:Session, skip:int=0, limit:int=100):
     return db.query(Category).offset(skip).limit(limit).all()
 
-def get_category_by_id(db:Session, category_id:int):
+def get_category_by_id(db:Session, category_id:str):
     return db.query(Category).filter(Category.id == category_id).first()
 
 def create_category(db:Session, category:CategorySchema):
