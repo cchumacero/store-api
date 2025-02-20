@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from db.db import Base
+from config.db import Base
 
 class Category(Base):
     __tablename__ = "categories"

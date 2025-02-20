@@ -1,11 +1,5 @@
-from typing import Annotated
-
-from fastapi import Depends, FastAPI, HTTPException, Query
-from sqlmodel import Field, Session, SQLModel, select
-import db
-
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, ARRAY, DateTime, func
-from db.db import Base
+from config.db import Base
 
 class Product(Base):
     __tablename__ = "products"
