@@ -21,4 +21,11 @@ class ProductSchema(BaseModel):
             }
         
         }
-    
+
+class ProductFilterParams(BaseModel):
+    title: Optional[str] = None
+    min_price: Optional[float] = None
+    max_price: Optional[float] = None
+    category: Optional[str] = None
+    skip: int = 0
+    limit: int = 100
