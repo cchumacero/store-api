@@ -9,7 +9,7 @@ class Product(Base):
     price = Column(Float)
     description = Column(String)
     category = Column(String, ForeignKey('categories.id'))
-    images = Column(ARRAY(String, dimensions= 10))
+    images = Column(ARRAY(String))
     created_at = Column(DateTime, default=func.now())
     
 
