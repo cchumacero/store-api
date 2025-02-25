@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, status
 from fastapi import Depends
 from config.db import SessionLocal, get_db
 from sqlalchemy.orm import Session
@@ -7,7 +7,7 @@ from crud import category, product
 
 router = APIRouter()
 
-@router.post("/")
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_category(request: CategorySchema, db: Session = Depends(get_db)):
     _category = category.create_category(db, request)
     return _category
@@ -23,7 +23,6 @@ async def update_category(category_id: str, request: CategorySchema, db:Session 
         _category = category.update_category(db, category_id, request.name, request.image)
         return _category
     except Exception as e:
-        # return Response(status="bad", code=304, message="the updated gone wrong")
         raise HTTPException(status_code= 404, detail="the updated gone wrong, not modified")
 
 @router.delete("/{category_id}")
@@ -32,7 +31,6 @@ async def remove_category(category_id: str, db:Session = Depends(get_db)):
         _category = category.remove_category(db, category_id)
         return _category
     except Exception as e:
-        # return Response(status="bad", code=304, message="the updated gone wrong")
         raise HTTPException(status_code= 404, detail="the deleted gone wrong, not deleted")
 
 @router.get("/{category_id}/products")
