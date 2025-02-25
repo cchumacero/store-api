@@ -1,20 +1,19 @@
 from typing import List,Optional,Generic, TypeVar
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict
 
 
 class CategorySchema(BaseModel):
     name: str
     image: str
     
-    class Config:
-        json_schema_extra = {
-        "example":
-            {
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
                 "name": "String - Nombre de la categoría",
-                "image": "String - Link de una imagen" 
+                "image": "String - Link de una imagen"
             }
-        
         }
+    )
     
     
 

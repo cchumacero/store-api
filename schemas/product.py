@@ -1,5 +1,5 @@
 from typing import List,Optional,Generic, TypeVar
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
 class ProductSchema(BaseModel):
@@ -9,10 +9,9 @@ class ProductSchema(BaseModel):
     category: str
     images: list[str]
     
-    class Config:
+    model_config = ConfigDict(
         json_schema_extra = {
-        "example":
-            {
+        "example": {
                 "title": "String - Nombre del producto",
                 "price": "Float - Precio del producto",
                 "description": "String - Descripción del producto",
@@ -21,6 +20,7 @@ class ProductSchema(BaseModel):
             }
         
         }
+    )
 
 class ProductFilterParams(BaseModel):
     title: Optional[str] = None
