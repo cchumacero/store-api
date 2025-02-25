@@ -9,6 +9,9 @@ def get_category(db:Session, skip:int=0, limit:int=100):
 def get_category_by_id(db:Session, category_id:str):
     return db.query(Category).filter(Category.id == category_id).first()
 
+def get_category_by_name(db:Session, category_name:str):
+    return db.query(Category).filter_by(name=category_name).first()
+
 def create_category(db:Session, category:CategorySchema):
     _category = Category(
         id = str(uuid.uuid4()),
