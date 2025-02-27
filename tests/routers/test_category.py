@@ -36,6 +36,15 @@ def test_create_category(client, db_session):
     assert _category is not None
     assert _category.image == category_a.image
 
+def test_create_many_categories(client, db_session):
+    for i in (1,10,1):
+        example = Category(f"i", f"i")
+        response = client.post("/categories", json=example.to_dict())
+        assert response.status_code == 201
+        _category = category.get_category_by_name(db_session, example.name)
+        assert _category is not None
+        assert _category.image == example.image
+
 def test_get_categories(client):
     client.post(
         "/categories", json=category_a_json
