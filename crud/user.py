@@ -25,3 +25,12 @@ def create_user(db:Session, user:UserCreate):
     db.commit()
     db.refresh(_user)
     return _user
+
+def update_username(db:Session, user_id: str, username: str):
+    _user = get_user_by_id(db, user_id)
+    _user.username = username
+    db.commit()
+    db.refresh(_user)
+    return _user
+
+    
