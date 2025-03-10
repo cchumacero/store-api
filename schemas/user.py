@@ -22,8 +22,10 @@ class UserResponse(BaseModel):
     username: str
     email: str
 
-    class Config:
+    model_config = ConfigDict(
         from_attributes = True
+    )
+        
 
 class Token(BaseModel):
     access_token: str
