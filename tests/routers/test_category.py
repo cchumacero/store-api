@@ -1,6 +1,4 @@
-import pytest
-import json
-from crud import category
+from dependencies.category import get_category_repository
 
 class Category:
     def __init__(self, name: str, image: str):
@@ -32,16 +30,18 @@ def test_create_category(client, db_session):
         "/categories", json=category_a_json
     )
     assert response.status_code == 201
-    _category = category.get_category_by_name(db_session, category_a.name)
+    category = get_category_repository(db_session)
+    _category = category.get_category_by_name(category_a.name)
     assert _category is not None
     assert _category.image == category_a.image
 
 def test_create_many_categories(client, db_session):
+    category = get_category_repository(db_session)
     for i in (1,10,1):
         example = Category(f"i", f"i")
         response = client.post("/categories", json=example.to_dict())
         assert response.status_code == 201
-        _category = category.get_category_by_name(db_session, example.name)
+        _category = category.get_category_by_name(example.name)
         assert _category is not None
         assert _category.image == example.image
 
@@ -84,6 +84,9 @@ def test_remove_category(client, db_session):
         "/categories", json=category_a_json
     )
     assert post_response.status_code == 201
+    
+    category = get_category_repository(db_session)
+    
     _category = post_response.json()
     
     delete_response = client.delete(
@@ -91,7 +94,7 @@ def test_remove_category(client, db_session):
     )
     
     assert delete_response.status_code == 200
-    _deleted_category = category.get_category_by_id(db_session, _category["id"])
+    _deleted_category = category.get_category_by_id(_category["id"])
     assert _deleted_category == None
     
     
