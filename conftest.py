@@ -6,7 +6,6 @@ from config.db import get_db, Base
 from main import app
 from dotenv import load_dotenv
 import os
-from crud import category
 
 load_dotenv()
 
