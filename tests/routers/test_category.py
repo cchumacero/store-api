@@ -71,7 +71,7 @@ def test_update_category(client, db_session):
     _category = post_response.json()
     
     put_response = client.put(
-        f"/categories/{_category["id"]}", json=category_update_json
+        f"/categories/{_category['id']}", json=category_update_json
     )
     
     assert put_response.status_code == 200
@@ -90,7 +90,7 @@ def test_remove_category(client, db_session):
     _category = post_response.json()
     
     delete_response = client.delete(
-        f"/categories/{_category["id"]}"
+        f"/categories/{_category['id']}"
     )
     
     assert delete_response.status_code == 200
