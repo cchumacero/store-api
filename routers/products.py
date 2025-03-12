@@ -1,17 +1,16 @@
 from fastapi import APIRouter, HTTPException, Query
 from fastapi import Depends
-from config.db import SessionLocal, get_db
-from sqlalchemy.orm import Session
 from schemas import ProductSchema, ProductFilterParams
-from crud import product
 from typing import Optional
+
+from controllers.products import ProductController
+from dependencies.product import get_product_controller
 
 router = APIRouter()
 
 @router.post("/")
-async def create_product(request: ProductSchema, db: Session = Depends(get_db)):
-    _product = product.create_product(db, request)
-    return _product
+async def create_product(request: ProductSchema, controller: ProductController = Depends(get_product_controller)):
+    return controller.create_product(request)
 
 @router.get("/")
 async def get_products(
@@ -23,7 +22,7 @@ async def get_products(
     category: Optional[str] = Query(None, description="Filtrar por categoría"),
     skip: int = 0,
     limit: int = 100,
-    db: Session = Depends(get_db)
+    controller: ProductController = Depends(get_product_controller)
 ):
     filters = ProductFilterParams(
         title=title,
@@ -33,33 +32,16 @@ async def get_products(
         skip=skip,
         limit=limit
     )
-    _products = product.get_products(db=db, filters=filters)
-    return _products
+    return controller.get_products(filters)
 
 @router.get("/{product_id}")
-async def get_product_by_id(product_id: str, db: Session = Depends(get_db)):
-    _product = product.get_product_by_id(db, product_id)
-    if _product is None:
-        raise HTTPException(status_code=404, detail="Product Not Found")
-    return _product
+async def get_product_by_id(product_id: str, controller: ProductController = Depends(get_product_controller)):
+    return controller.get_product_by_id(product_id)
 
 @router.put("/{product_id}")
-async def update_product(product_id: str, request: ProductSchema, db: Session = Depends(get_db)):
-    try:
-        _product = product.update_product(
-            db, product_id, request.title, request.price, request.description, request.category, request.images)
-        return _product
-    except Exception as e:
-        # return Response(status="bad", code=304, message="the updated gone wrong")
-        raise HTTPException(
-            status_code=404, detail="the updated gone wrong, not modified")
+async def update_product(product_id: str, request: ProductSchema, controller: ProductController = Depends(get_product_controller)):
+    return controller.update_product(product_id, request)
 
 @router.delete("/{product_id}")
-async def remove_product(product_id: str, db: Session = Depends(get_db)):
-    try:
-        _product = product.remove_product(db, product_id)
-        return _product
-    except Exception as e:
-        # return Response(status="bad", code=304, message="the updated gone wrong")
-        raise HTTPException(
-            status_code=404, detail="the deleted gone wrong, not deleted")
+async def remove_product(product_id: str, controller: ProductController = Depends(get_product_controller)):
+    return controller.remove_product(product_id)
