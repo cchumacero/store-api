@@ -33,8 +33,7 @@ jobs:
 
     - name: Test with pytest
       env:
-        POSTGRES_URL: ${{secrets.POSTGRES_URL}}
+        POSTGRES_URL: ${{secrets.DATABASE_URL}}
         DATABASE_URL_TEST: ${{secrets.DATABASE_URL_TEST}}
-        ENVIROMENT: ${{secrets.ENVIROMENT}}
       run: |
         pytest
