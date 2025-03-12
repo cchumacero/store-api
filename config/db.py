@@ -6,10 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Creamos el motor
-if os.getenv("ENVIROMENT") == "development":
-    engine = create_engine(os.getenv("DATABASE_URL"))
-else:
-    engine = create_engine(os.getenv("POSTGRES_URL"))
+engine = create_engine(os.getenv("DATABASE_URL"))
+
     
 # Luego creamos los parametros para las sessiones que se creen de dicho motor
 SessionLocal = sessionmaker(autocommit=False,
