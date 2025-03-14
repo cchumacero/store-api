@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException, Path, status
+from fastapi import APIRouter, status
 from fastapi import Depends
-from schemas import CategorySchema, Response
+from schemas import CategorySchema
 from controllers.categories import CategoryController
 from dependencies.category import get_category_controller
 

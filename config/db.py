@@ -8,7 +8,6 @@ load_dotenv()
 # Creamos el motor
 engine = create_engine(os.getenv("DATABASE_URL"))
 
-    
 # Luego creamos los parametros para las sessiones que se creen de dicho motor
 SessionLocal = sessionmaker(autocommit=False,
                             autoflush=False,

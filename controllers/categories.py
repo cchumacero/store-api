@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Path, status
+from fastapi import HTTPException, Path, status
 from schemas import CategorySchema, Response
 from crud.category import CategoryRepository
 
