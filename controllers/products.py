@@ -1,4 +1,4 @@
-from fastapi import HTTPException, Path, Query
+from fastapi import HTTPException
 from schemas import ProductSchema, ProductFilterParams
 from crud.product import ProductRepository
 
@@ -20,6 +20,10 @@ class ProductController:
             raise HTTPException(status_code=404, detail="Product Not Found")
         return _product
 
+    def get_products_by_category(self, category_id: str):
+        _products = self.repo.get_product_by_category(category_id)
+        return _products
+    
     def update_product(self, product_id: str, request: ProductSchema):
         try:
             _product = self.repo.update_product(

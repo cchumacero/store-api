@@ -45,3 +45,7 @@ async def update_product(product_id: str, request: ProductSchema, controller: Pr
 @router.delete("/{product_id}")
 async def remove_product(product_id: str, controller: ProductController = Depends(get_product_controller)):
     return controller.remove_product(product_id)
+
+@router.get("/{category_id}")
+async def get_products_by_category(category_id: str, controller: ProductController = Depends(get_product_controller)):
+    return controller.get_products_by_category(category_id)
