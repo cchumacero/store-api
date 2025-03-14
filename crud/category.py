@@ -18,7 +18,6 @@ class CategoryRepository:
 
     def create_category(self, category: CategorySchema):
         _category = Category(
-            id=str(uuid.uuid4()),
             name=category.name,
             image=category.image
         )

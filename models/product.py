@@ -1,10 +1,11 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, ARRAY, DateTime, func
 from config.db import Base
+import uuid
 
 class Product(Base):
     __tablename__ = "products"
     
-    id = Column(String, primary_key=True)
+    id = Column(String, primary_key=True, default=str(uuid.uuid4()))
     title = Column(String)
     price = Column(Float)
     description = Column(String)

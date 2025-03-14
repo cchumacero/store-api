@@ -33,7 +33,6 @@ class ProductRepository:
 
     def create_product(self, product:ProductSchema):
         _product = Product(
-            id = str(uuid.uuid4()),
             title = product.title,
             price = product.price,
             description = product.description,

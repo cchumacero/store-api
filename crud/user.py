@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models import User
 from schemas import UserCreate
-import uuid
 
 class UserRepository:
     def __init__(self, db: Session):
@@ -18,7 +17,6 @@ class UserRepository:
 
     def create_user(self, user:UserCreate):
         _user = User(
-            id = str(uuid.uuid4()),
             username = user.username,
             email =  user.email,
             hashed_password = user.password
