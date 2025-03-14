@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models import User
 from schemas import UserCreate
-from config.auth import hash_password
 import uuid
 
 class UserRepository:
@@ -22,7 +21,7 @@ class UserRepository:
             id = str(uuid.uuid4()),
             username = user.username,
             email =  user.email,
-            hashed_password = hash_password(user.password)
+            hashed_password = user.password
         )
         self.db.add(_user)
         self.db.commit()
