@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models import Category
 from schemas import CategorySchema
-import uuid
 
 class CategoryRepository:
     def __init__(self, db: Session):

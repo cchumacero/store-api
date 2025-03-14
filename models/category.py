@@ -5,7 +5,7 @@ import uuid
 class Category(Base):
     __tablename__ = "categories"
     
-    id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String)
     image = Column(String)
     

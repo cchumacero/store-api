@@ -5,7 +5,7 @@ import uuid
 class Product(Base):
     __tablename__ = "products"
     
-    id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     title = Column(String)
     price = Column(Float)
     description = Column(String)

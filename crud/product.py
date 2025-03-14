@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models import Product
 from schemas import ProductSchema, ProductFilterParams
-import uuid
 
 class ProductRepository:
     

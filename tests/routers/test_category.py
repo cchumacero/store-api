@@ -38,12 +38,13 @@ def test_create_category(client, db_session):
 def test_create_many_categories(client, db_session):
     category = get_category_repository(db_session)
     for i in (1,10,1):
-        example = Category(f"i", f"i")
+        example = Category(str(i), str(i))
         response = client.post("/categories", json=example.to_dict())
+        print(response.json)
         assert response.status_code == 201
-        _category = category.get_category_by_name(example.name)
+        _category = category.get_category_by_name(str(i))
         assert _category is not None
-        assert _category.image == example.image
+        assert _category.image == str(i)
 
 def test_get_categories(client):
     client.post(
