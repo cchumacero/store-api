@@ -4,13 +4,14 @@ from routers.categories import router as category_routes
 from routers.products import router as product_routes
 from routers.auth import router as auth_routes
 from routers.users import router as user_routes
-
+from routers.carts import router as cart_routes
 
 app = FastAPI()
 app.include_router(router = category_routes, tags=["Categories"], prefix="/categories")
 app.include_router(router = product_routes, tags=["Products"], prefix="/products")
 app.include_router(router = auth_routes, tags=["Authentication"], prefix="/auth")
 app.include_router(router = user_routes, tags=["Users"], prefix="/users")
+app.include_router(router = cart_routes, tags=["Carts"], prefix="/carts")
 
 @app.get("/")
 def root():
