@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from models.cart import Cart, CartItem
+from schemas.cart import CartItemSchema
 
 class CartRepository:
     def __init__(self, db: Session):
@@ -19,12 +20,13 @@ class CartRepository:
         _cart_id = self.get_cart_id_by_user_id(user_id=user_id)
         return _cart_id
     
-    def add_item_to_cart(self, user_id: str, product_id: str, quantity: int = 1):
+    def add_item_to_cart(self, user_id: str, item: CartItemSchema):
         _cart_id = self.get_cart_id_by_user_id(user_id)
+        
         _new_item = CartItem(
             cart_id = _cart_id,
-            product_id = product_id,
-            quantity = quantity
+            product_id = item.product_id,
+            quantity = item.quantity
         )
         self.db.add(_new_item)
         self.db.commit()

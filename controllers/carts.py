@@ -13,8 +13,8 @@ class CartController:
             return {"cart_id": _new_cart}
         else: return {"cart_id": _cart}
     
-    def add_item_to_cart(self, user_id: str, request: CartItemSchema):
-        _item = self.repo.add_item_to_cart(user_id, request.product_id, request.quantity)
+    def add_item_to_cart(self, user_id: str, item: CartItemSchema):
+        _item = self.repo.add_item_to_cart(user_id, item)
         return _item
 
     def update_item(self, user_id: str, product_id: str, add_or_substract: int):
