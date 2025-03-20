@@ -15,8 +15,8 @@ class CartItem(Base):
     __tablename__ = "cart_items"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    cart_id = Column(String, ForeignKey("carts.id"), unique=True, index=True)
-    product_id = Column(String, ForeignKey("products.id"), unique=True, index=True)
+    cart_id = Column(String, ForeignKey("carts.id"), index=True)
+    product_id = Column(String, ForeignKey("products.id"), index=True)
     quantity = Column(Integer)
     
     cart = relationship("Cart", back_populates="items")
