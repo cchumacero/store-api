@@ -7,7 +7,7 @@ class CartItemSchema(BaseModel):
 
 
 class CartSchema(BaseModel):
-    cart_id: str
+    id: str
     user_id: str
-    products: CartItemSchema
+    items: list[CartItemSchema]
     
