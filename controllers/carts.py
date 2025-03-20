@@ -1,17 +1,17 @@
 from fastapi import HTTPException
 from crud.cart import CartRepository
-from schemas.cart import CartItemSchema
+from schemas.cart import CartItemSchema, CartSchema
 
 class CartController:
     def __init__(self, repo: CartRepository):
         self.repo = repo
     
-    def get_user_cart(self, user_id: str):
+    def get_user_cart(self, user_id: str) -> CartSchema:
         _cart = self.repo.get_cart_id_by_user_id(user_id)
         if _cart is None:
             _new_cart = self.repo.create_cart(user_id)
-            return {"cart_id": _new_cart}
-        else: return {"cart_id": _cart}
+            return _new_cart
+        else: return _cart
     
     def add_item_to_cart(self, user_id: str, item: CartItemSchema):
         _item = self.repo.add_item_to_cart(user_id, item)
