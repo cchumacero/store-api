@@ -2,11 +2,11 @@ from fastapi import APIRouter, status
 from fastapi import Depends
 from controllers.carts import CartController
 from dependencies.cart import get_cart_controller
-from schemas.cart import CartItemSchema
+from schemas.cart import CartItemSchema, CartSchema
 
 router = APIRouter()
 
-@router.get("/{user_id}")
+@router.get("/{user_id}", response_model=CartSchema)
 async def get_cart(user_id: str, controller: CartController = Depends(get_cart_controller)):
     return controller.get_user_cart(user_id)
 
